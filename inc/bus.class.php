@@ -13,7 +13,7 @@ class BusAPI
 	
 		$sql = <<<SQL
 SELECT pid, name, SQRT(POW((lat - :lat), 2) + POW((lon - :lon), 2)) AS dist
-FROM bus_place ORDER BY dist LIMIT 1
+FROM place ORDER BY dist LIMIT 1
 SQL;
 	
 		$res = $this->dbh->query($sql, array(':lat' => $lat, ':lon' => $lon));
@@ -29,7 +29,7 @@ SQL;
 	public function getnodebyname($name) {
 	
 		$sql = <<<SQL
-SELECT pid, name FROM bus_place WHERE name LIKE :name LIMIT 1
+SELECT pid, name FROM place WHERE name LIKE :name LIMIT 1
 SQL;
 	
 		$res = $this->dbh->query($sql, array(':name' => "%$name%"));
@@ -150,7 +150,7 @@ SQL;
 SELECT '1' AS type, s1.`bid` AS busid1, '0' AS busid2, '0' AS busid3,
 '0' AS changeid1, '0' AS changeid2,
 (s2.`distance` - s1.`distance`) AS dist1, '0' AS dist2, '0' AS dist3 
-FROM `bus_stop` AS s1 INNER JOIN `bus_stop` AS s2
+FROM `stop` AS s1 INNER JOIN `stop` AS s2
 ON s1.`bid` = s2.`bid`
 WHERE s1.`pid` = :from AND s2.`pid` = :to AND s2.`distance` > s1.`distance`
 ORDER BY dist1 LIMIT 5;
@@ -173,11 +173,11 @@ SELECT '2' AS type, s1.`bid` AS busid1, s3.`bid` AS busid2, '0' AS busid3,
 ch1.`changeid` AS changeid1, '0' AS changeid2, 
 (s2.`distance` - s1.`distance`) AS dist1, 
 (s4.`distance` - s3.`distance`) AS dist2, '0' AS dist3 
-FROM `bus_changeover` AS ch1, `bus_stop` AS s1 INNER JOIN `bus_stop` AS s2
+FROM `changeover` AS ch1, `stop` AS s1 INNER JOIN `stop` AS s2
 ON s1.`bid` = s2.`bid`
-INNER JOIN `bus_stop` AS s3
+INNER JOIN `stop` AS s3
 ON s2.`pid` = s3.`pid`
-INNER JOIN `bus_stop` AS s4
+INNER JOIN `stop` AS s4
 ON s3.`bid` = s4.`bid`  
 WHERE s1.`pid` = :from AND s2.`pid` = ch1.`changeid` AND s4.`pid` = :to 
 AND s2.`distance` > s1.`distance` AND s4.`distance` > s3.`distance` AND
@@ -203,16 +203,16 @@ ch1.`changeid` as changeid1, ch2.`changeid` as changeid2,
 (s2.`distance` - s1.`distance`) as dist1, 
 (s4.`distance` - s3.`distance`) as dist2, 
 (s6.`distance` - s5.`distance`) as dist3
-FROM `bus_changeover` AS ch1, `bus_changeover` AS ch2, `bus_stop` AS s1 
-INNER JOIN `bus_stop` AS s2
+FROM `changeover` AS ch1, `changeover` AS ch2, `stop` AS s1 
+INNER JOIN `stop` AS s2
 ON s1.`bid` = s2.`bid`
-INNER JOIN `bus_stop` AS s3
+INNER JOIN `stop` AS s3
 ON s2.`pid` = s3.`pid`
-INNER JOIN `bus_stop` AS s4
+INNER JOIN `stop` AS s4
 ON s3.`bid` = s4.`bid`
-INNER JOIN `bus_stop` AS s5
+INNER JOIN `stop` AS s5
 ON s4.`pid` = s5.`pid`
-INNER JOIN `bus_stop` AS s6
+INNER JOIN `stop` AS s6
 ON s5.`bid` = s6.`bid`  
 WHERE s1.`pid` = :from AND s2.`pid` = ch1.`changeid` AND s4.`pid` = ch2.`changeid` 
 AND s6.`pid` = :to AND s2.`distance` > s1.`distance` AND s4.`distance` > s3.`distance` 
@@ -233,7 +233,7 @@ SQL;
 	
 	public function getbusdetails($busid) {
 	
-		$res	= $this->dbh->query("SELECT `routeno`, `from`, `to` FROM bus_bus "
+		$res	= $this->dbh->query("SELECT `routeno`, `from`, `to` FROM bus "
 						."WHERE busid = :id", array(':id' => $busid));
 		$return = false;
 
@@ -249,7 +249,7 @@ SQL;
 	
 	public function getplacename($pid) {
 	
-		$res	= $this->dbh->query("SELECT name FROM bus_place WHERE pid = :id", 
+		$res	= $this->dbh->query("SELECT name FROM place WHERE pid = :id", 
 						array(':id' => $pid));
 		$return = false;
 
