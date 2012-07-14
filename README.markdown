@@ -57,7 +57,35 @@ or latitude,longitude pairs seperated by commas.
 
 	http://host.com/?from=56.3,4.3&to=8.3,4.2
 	
-The API will return a JSON response string.
+The API will return a JSON response string. Here's an example:
+
+	{
+	   "title":"Buses from Kollupitiya Junc. to Glass House",
+	   "links":[
+		  {
+		     "nobuses":1,
+		     "totaldist":1299,
+		     "inst":[
+		        "Take the <strong>177<\/strong> (Kollupitiya - Kaduwela) bus at <strong>Kollupitiya Junc.<\/strong>",
+		        "Get down at <strong>Glass House<\/strong><div class=\"dist\">1.299 km<\/div>"
+		     ]
+		  },
+		  {
+		     "nobuses":2,
+		     "totaldist":1299,
+		     "inst":[
+		        "Take the <strong>140<\/strong> (Kollupitiya - Wellampitiya) bus at <strong>Kollupitiya Junc.<\/strong>",
+		        "Get down at <strong>Public Library<\/strong><div class=\"dist\">1.076 km<\/div>",
+		        "Take the <strong>138\/2<\/strong> (Pettah - Mattegoda) bus",
+		        "Get down at <strong>Glass House<\/strong><div class=\"dist\">0.223 km<\/div>"
+		     ]
+		  }
+	   ]
+	}
+
+
+Variables
+---------
 
 * `['title']` contains the title (e.g. Buses from Kottawa to Town Hall)
 
