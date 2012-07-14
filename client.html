@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Colombo Bus Route Finder</title>
+<link rel="stylesheet" href="./inc/bus.css" type="text/css"/>
+<link rel="icon" href="./inc/favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="./inc/favicon.ico" type="image/x-icon"/>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="./inc/bus.js"></script>
+</head>
+<body>
+<div id="form">
+I want to take a bus...<br><br>
+<label class="label">from</label><input type="text" class="tbox" id="f" value="" /><br>
+<label class="label">to</label><input type="text" class="tbox" id="t" value="" /><br>
+<button type="submit" onclick="findbus()" class="button">find a bus</button>
+</div>
+<div id="list">
+</div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+#list {
+	width: 480px;
+	padding: 30px;
+}
+
+#form {
+	background: #EEE;
+	padding: 30px;
+	font-size: 12px;
+	display: block;
+}
+
+.label {
+	width: 100px;
+	display: block;
+	float: left;
+	padding: 3px 0;
+	margin: 5px 0;
+}
+
+.button {
+	padding: 4px 8px;
+	border: 0;
+	margin-left: 200px;
+	margin-top: 5px;
+	color: #FFF;
+	background: #333;	
+}
+
+.tbox {
+	border: 0;
+	padding: 5px;
+	margin: 5px 0;
+}
+
+.title {
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.suggestion {
+	padding: 5px;
+	font-size: 12px;
+	color: #333;
+}
+
+a {
+	color:#0ab9e5;
+	text-decoration:none;
+	outline: none;
+}
+
+a:hover	{
+	text-decoration: underline;
+}
+
+.instructions {
+	display: none;
+	padding: 10px;
+}
+
+.first {
+	display: block;
+}
+
+.step {
+	padding: 5px;
+	border-top: #EEE 1px dotted;
+	clear: both;
+}
+
+.firststep {
+	padding: 5px;
+	border-top: none;
+}
+
+.dist {
+	float: right;
+	color: #BBB;
+	font-size: 85%;
+}
