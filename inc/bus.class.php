@@ -79,7 +79,7 @@ SQL;
 					$bus = $this->getbusdetails($b['busid2']);
 				
 					$goff = ($b['busid3'] == 0) ? $tonode['name'] : 
-								$this->getplacename($b['changeid1']);
+								$this->getplacename($b['changeid2']);
 				
 					$link['inst'][] = array(
 						'route'		=> $bus['routeno'],
