@@ -14,10 +14,10 @@ function render(data) {
 
 	var html = ''; var first = ''; var even = '';
 	
-	if(data['links'].length == 0) {
+	if(data['links'] == undefined) {
 	
 		html += "<div class=\"title\"><strong>We're sorry, but no buses were found between "
-		+ data['from'] + " and " + data['to'] + ". You might have to use another way to get there</strong></div>";
+		+ data['from'] + " and " + data['to'] + ". You might have to use another way to get there.</strong></div>";
 	}
 	else {
 
@@ -81,4 +81,7 @@ function flip() {
 	$('#list').empty();
 	populate($('#t').val(),$('#f').val());
 }
+
+
+
 

@@ -90,6 +90,8 @@ SQL;
 						'distance'	=> ($b['dist2'] / 1000));
 						
 					if($b['busid3'] != 0) {
+					
+						$bus = $this->getbusdetails($b['busid3']);
 				
 						$link['inst'][] = array(
 							'route'		=> $bus['routeno'],
@@ -148,7 +150,7 @@ SELECT '1' AS type, s1.`bid` AS busid1, '0' AS busid2, '0' AS busid3,
 (s2.`distance` - s1.`distance`) AS dist1, '0' AS dist2, '0' AS dist3 
 FROM `bus_stop` AS s1 INNER JOIN `bus_stop` AS s2
 ON s1.`bid` = s2.`bid`
-WHERE s1.`pid` = :from AND s2.`pid` = :to AND s2.`distance` > s1.`distance`
+WHERE s1.`pid` = :from AND s2.`pid` = :to AND s2.`distance` > s1.`distance` 
 ORDER BY dist1 LIMIT 5;
 SQL;
 	
@@ -169,15 +171,17 @@ SELECT '2' AS type, s1.`bid` AS busid1, s3.`bid` AS busid2, '0' AS busid3,
 ch1.`changeid` AS changeid1, '0' AS changeid2, 
 (s2.`distance` - s1.`distance`) AS dist1, 
 (s4.`distance` - s3.`distance`) AS dist2, '0' AS dist3 
-FROM `bus_changeover` AS ch1, `bus_stop` AS s1 INNER JOIN `bus_stop` AS s2
+FROM `bus_changeover` AS ch1, `bus_bus` AS b1, `bus_bus` AS b2,
+`bus_stop` AS s1 INNER JOIN `bus_stop` AS s2
 ON s1.`bid` = s2.`bid`
 INNER JOIN `bus_stop` AS s3
 ON s2.`pid` = s3.`pid`
 INNER JOIN `bus_stop` AS s4
 ON s3.`bid` = s4.`bid`  
 WHERE s1.`pid` = :from AND s2.`pid` = ch1.`changeid` AND s4.`pid` = :to 
-AND s2.`distance` > s1.`distance` AND s4.`distance` > s3.`distance` AND
-s1.`bid` <> s3.`bid`
+AND s2.`distance` > s1.`distance` AND s4.`distance` > s3.`distance` 
+AND b1.`busid` = s1.`bid` AND b2.`busid` = s3.`bid` AND
+b1.similarity <> b2.similarity AND s1.`bid` <> s3.`bid` 
 ORDER BY (dist1 + dist2)  LIMIT 5;
 SQL;
 	
@@ -194,11 +198,11 @@ SQL;
 	public function findthreebus($from, $to) {
 
 		$sql = <<<SQL
-SELECT '3' AS type, s1.`bid` AS busid1, s3.`bid` AS busid2, s5.`bid` AS busid3, 
-ch1.`changeid` as changeid1, ch2.`changeid` as changeid2, 
+SELECT '3' AS type, s1.`bid` AS busid1, s3.`bid` AS busid2, 
+s5.`bid` AS busid3, ch1.`changeid` as changeid1, ch2.`changeid` as changeid2, 
 (s2.`distance` - s1.`distance`) as dist1, 
 (s4.`distance` - s3.`distance`) as dist2, 
-(s6.`distance` - s5.`distance`) as dist3
+(s6.`distance` - s5.`distance`) as dist3 
 FROM `bus_changeover` AS ch1, `bus_changeover` AS ch2, 
 `bus_bus` AS b1, `bus_bus` AS b2, `bus_bus` AS b3, 
 `bus_stop` AS s1 INNER JOIN `bus_stop` AS s2 ON s1.`bid` = s2.`bid`
@@ -209,9 +213,9 @@ INNER JOIN `bus_stop` AS s6 ON s5.`bid` = s6.`bid`
 WHERE s1.`pid` = :from AND s2.`pid` = ch1.`changeid` AND s4.`pid` = ch2.`changeid` 
 AND s6.`pid` = :to AND s2.`distance` > s1.`distance` AND s4.`distance` > s3.`distance` 
 AND s6.`distance` > s5.`distance` AND b1.`busid` = s1.`bid` AND b2.`busid` = s3.`bid` AND 
-b3.`busid` = s5.`bid` AND b1.similarity <> b2.similarity
-AND b2.similarity <> b3.similarity AND b1.similarity <> b3.similarity
-ORDER BY (dist1 + dist2 + dist3) LIMIT 5;
+b3.`busid` = s5.`bid` AND b1.`similarity` <> b2.`similarity`
+AND b2.`similarity` <> b3.`similarity` AND b1.`similarity` <> b3.`similarity`
+ORDER BY (dist1 + dist2 + dist3) LIMIT 5
 SQL;
 
 		$res = $this->dbh->query($sql, array(':from' => $from, ':to' => $to));
