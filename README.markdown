@@ -57,45 +57,93 @@ or latitude,longitude pairs seperated by commas.
 
 	http://host.com/?from=56.3,4.3&to=8.3,4.2
 	
+	http://host.com/?from=kollupitiya&to=glass+house
+	
 The API will return a JSON response string. Here's an example:
 
 	{
-	   "title":"Buses from Kollupitiya Junc. to Glass House",
+	   "from":"Borella",
+	   "to":"Lotus Road",
+	   "permalink":"100_3",
 	   "links":[
 		  {
-		     "nobuses":1,
-		     "totaldist":1299,
+		     "nobuses":2,
+		     "totaldist":5450,
 		     "inst":[
-		        "Take the <strong>177<\/strong> (Kollupitiya - Kaduwela) bus at <strong>Kollupitiya Junc.<\/strong>",
-		        "Get down at <strong>Glass House<\/strong><div class=\"dist\">1.299 km<\/div>"
+		        {
+		           "route":"103",
+		           "busfrom":"Narahenpita",
+		           "busto":"Fort",
+		           "geton":"Borella",
+		           "getoff":"Fort Railway Station",
+		           "distance":5.095
+		        },
+		        {
+		           "route":"100",
+		           "busfrom":"Pettah",
+		           "busto":"Panadura",
+		           "geton":"Borella",
+		           "getoff":"Lotus Road",
+		           "distance":0.355
+		        }
 		     ]
 		  },
 		  {
-		     "nobuses":2,
-		     "totaldist":1299,
+		     "nobuses":3,
+		     "totaldist":6222,
 		     "inst":[
-		        "Take the <strong>140<\/strong> (Kollupitiya - Wellampitiya) bus at <strong>Kollupitiya Junc.<\/strong>",
-		        "Get down at <strong>Public Library<\/strong><div class=\"dist\">1.076 km<\/div>",
-		        "Take the <strong>138\/2<\/strong> (Pettah - Mattegoda) bus",
-		        "Get down at <strong>Glass House<\/strong><div class=\"dist\">0.223 km<\/div>"
+		        {
+		           "route":"154",
+		           "busfrom":"Kiribathgoda",
+		           "busto":"Angulana",
+		           "geton":"Borella",
+		           "getoff":"Horton Place - Baseline Junc.",
+		           "distance":0.386
+		        },
+		        {
+		           "route":"103",
+		           "busfrom":"Narahenpita",
+		           "busto":"Fort",
+		           "geton":"Borella",
+		           "getoff":"Horton Place - Baseline Junc.",
+		           "distance":5.481
+		        },
+		        {
+		           "route":"103",
+		           "busfrom":"Narahenpita",
+		           "busto":"Fort",
+		           "geton":"Borella",
+		           "getoff":"Lotus Road",
+		           "distance":0.355
+		        }
 		     ]
 		  }
 	   ]
 	}
 
-
 Variables
 ---------
 
-* `['title']` contains the title (e.g. Buses from Kottawa to Town Hall)
+* `['from']` and `['to']` contains the source and destination
+
+* `['permalink']` is the parmalink id. You can hit the API with `?id=the_permalink`
+for JSON output, and `?client&id=the_permalink` for HTML output
 
 * `['links']` is an array that contains all the suggested routes
 
 *  `['links'][<element number>]['nobuses']` gives you the number of buses, and 
 `['links'][<element number>]['totaldist']` gives you the total distance in metres.
 
-* `['links'][<element number>]['inst']` is an array with step by step instructions
-on how to take the bus.
+* `['links'][<element number>]['inst']` is an array with all the buses that you need
+to take.
+
+* Each element there contains the following attributes:
+	* `['route']` is the route number,
+	* `['busfrom']` is the bus start point
+	* `['busto']` is the bus ending point
+	* `['geton']` is where you need to get on to the bus
+	* `['getoff']` is where to get off, and
+	* `['distance']` is the distance travelled in km
 
 
 More Information

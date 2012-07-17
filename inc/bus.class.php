@@ -13,7 +13,7 @@ class BusAPI
 	
 		$sql = <<<SQL
 SELECT pid, name, SQRT(POW((lat - :lat), 2) + POW((lon - :lon), 2)) AS dist
-FROM place ORDER BY dist LIMIT 1
+FROM bus_place ORDER BY dist LIMIT 1
 SQL;
 	
 		$res = $this->dbh->query($sql, array(':lat' => $lat, ':lon' => $lon));
@@ -29,7 +29,7 @@ SQL;
 	public function getnodebyname($name) {
 	
 		$sql = <<<SQL
-SELECT pid, name FROM place WHERE name LIKE :name LIMIT 1
+SELECT pid, name FROM bus_place WHERE name LIKE :name LIMIT 1
 SQL;
 	
 		$res = $this->dbh->query($sql, array(':name' => "%$name%"));
@@ -46,7 +46,9 @@ SQL;
 	
 		$resarray = array();
 	
-		$resarray['title'] = "Buses from {$fromnode['name']} to {$tonode['name']}";
+		$resarray['from']		= $fromnode['name'];
+		$resarray['to']			= $tonode['name'];
+		$resarray['permalink']	= $fromnode['pid'] . "_" . $tonode['pid'];
 	
 		foreach($this->getlinks($fromnode['pid'], $tonode['pid']) as $b) {
 	
@@ -59,51 +61,45 @@ SQL;
 		
 				/* bus 1, source deets */
 				$bus = $this->getbusdetails($b['busid1']);
-			
-				$link['inst'][] = "Take the <strong>{$bus['routeno']}"
-				."</strong> ({$bus['from']} - {$bus['to']}) bus at <strong>"
-				."{$fromnode['name']}</strong>";
-			}
-		
-			if($b['busid2'] == 0) {
-			
-				$link['inst'][] = "Get down at <strong>{$tonode['name']}</strong>"
-				."<div class=\"dist\">" . ($b['dist1'] / 1000) . " km</div>";
-			}
-			else {
-		
-				/* changeover point 1 deets */	
-				$link['inst'][] = "Get down at <strong>"
-				. $this->getplacename($b['changeid1']) . "</strong>"
-				. "<div class=\"dist\">" . ($b['dist1'] / 1000) . " km</div>";
-		
-				/* bus 2 deets */
-				$bus = $this->getbusdetails($b['busid2']);
-			
-				$link['inst'][] = "Take the <strong>{$bus['routeno']}"
-				."</strong> ({$bus['from']} - {$bus['to']}) bus";
-			
-				if($b['busid3'] == 0) {
-			
-					$link['inst'][] = "Get down at <strong>{$tonode['name']}</strong>"
-					."<div class=\"dist\">" . ($b['dist2'] / 1000) . " km</div>";
-				}
-				else {
-		
-					/* changeover point 2 deets */	
-					$link['inst'][] = "Get down at <strong>"
-					.$this->getplacename($b['changeid2']) . "</strong>"
-					."<div class=\"dist\">" . ($b['dist2'] / 1000) . " km</div>";
-		
-					/* bus 3 deets */
-					$bus = $this->getbusdetails($b['busid3']);
-			
-					$link['inst'][] = "Take the <strong>{$bus['routeno']}"
-					."</strong> ({$bus['from']} - {$bus['to']}) bus";
 				
+				$goff = ($b['busid2'] == 0) ? $tonode['name'] : 
+							$this->getplacename($b['changeid1']);
 				
-					$link['inst'][] = "Get down at <strong>{$tonode['name']}</strong>"
-					."<div class=\"dist\">" . ($b['dist3'] / 1000) . " km</div>";
+				$link['inst'][] = array(
+					'route'		=> $bus['routeno'],
+					'busfrom'	=> $bus['from'],
+					'busto'		=> $bus['to'],
+					'geton'		=> $fromnode['name'],
+					'getoff'	=> $goff,
+					'distance'	=> ($b['dist1'] / 1000));
+					
+			
+				if($b['busid2'] != 0) {
+			
+					$bus = $this->getbusdetails($b['busid2']);
+				
+					$goff = ($b['busid3'] == 0) ? $tonode['name'] : 
+								$this->getplacename($b['changeid1']);
+				
+					$link['inst'][] = array(
+						'route'		=> $bus['routeno'],
+						'busfrom'	=> $bus['from'],
+						'busto'		=> $bus['to'],
+						'geton'		=> $fromnode['name'],
+						'getoff'	=> $goff,
+						'distance'	=> ($b['dist2'] / 1000));
+						
+					if($b['busid3'] != 0) {
+				
+						$link['inst'][] = array(
+							'route'		=> $bus['routeno'],
+							'busfrom'	=> $bus['from'],
+							'busto'		=> $bus['to'],
+							'geton'		=> $fromnode['name'],
+							'getoff'	=> $tonode['name'],
+							'distance'	=> ($b['dist3'] / 1000));
+							
+					}
 				}
 			}
 		
@@ -150,7 +146,7 @@ SQL;
 SELECT '1' AS type, s1.`bid` AS busid1, '0' AS busid2, '0' AS busid3,
 '0' AS changeid1, '0' AS changeid2,
 (s2.`distance` - s1.`distance`) AS dist1, '0' AS dist2, '0' AS dist3 
-FROM `stop` AS s1 INNER JOIN `stop` AS s2
+FROM `bus_stop` AS s1 INNER JOIN `bus_stop` AS s2
 ON s1.`bid` = s2.`bid`
 WHERE s1.`pid` = :from AND s2.`pid` = :to AND s2.`distance` > s1.`distance`
 ORDER BY dist1 LIMIT 5;
@@ -173,11 +169,11 @@ SELECT '2' AS type, s1.`bid` AS busid1, s3.`bid` AS busid2, '0' AS busid3,
 ch1.`changeid` AS changeid1, '0' AS changeid2, 
 (s2.`distance` - s1.`distance`) AS dist1, 
 (s4.`distance` - s3.`distance`) AS dist2, '0' AS dist3 
-FROM `changeover` AS ch1, `stop` AS s1 INNER JOIN `stop` AS s2
+FROM `bus_changeover` AS ch1, `bus_stop` AS s1 INNER JOIN `bus_stop` AS s2
 ON s1.`bid` = s2.`bid`
-INNER JOIN `stop` AS s3
+INNER JOIN `bus_stop` AS s3
 ON s2.`pid` = s3.`pid`
-INNER JOIN `stop` AS s4
+INNER JOIN `bus_stop` AS s4
 ON s3.`bid` = s4.`bid`  
 WHERE s1.`pid` = :from AND s2.`pid` = ch1.`changeid` AND s4.`pid` = :to 
 AND s2.`distance` > s1.`distance` AND s4.`distance` > s3.`distance` AND
@@ -203,21 +199,19 @@ ch1.`changeid` as changeid1, ch2.`changeid` as changeid2,
 (s2.`distance` - s1.`distance`) as dist1, 
 (s4.`distance` - s3.`distance`) as dist2, 
 (s6.`distance` - s5.`distance`) as dist3
-FROM `changeover` AS ch1, `changeover` AS ch2, `stop` AS s1 
-INNER JOIN `stop` AS s2
-ON s1.`bid` = s2.`bid`
-INNER JOIN `stop` AS s3
-ON s2.`pid` = s3.`pid`
-INNER JOIN `stop` AS s4
-ON s3.`bid` = s4.`bid`
-INNER JOIN `stop` AS s5
-ON s4.`pid` = s5.`pid`
-INNER JOIN `stop` AS s6
-ON s5.`bid` = s6.`bid`  
+FROM `bus_changeover` AS ch1, `bus_changeover` AS ch2, 
+`bus_bus` AS b1, `bus_bus` AS b2, `bus_bus` AS b3, 
+`bus_stop` AS s1 INNER JOIN `bus_stop` AS s2 ON s1.`bid` = s2.`bid`
+INNER JOIN `bus_stop` AS s3 ON s2.`pid` = s3.`pid`
+INNER JOIN `bus_stop` AS s4 ON s3.`bid` = s4.`bid`
+INNER JOIN `bus_stop` AS s5 ON s4.`pid` = s5.`pid`
+INNER JOIN `bus_stop` AS s6 ON s5.`bid` = s6.`bid`  
 WHERE s1.`pid` = :from AND s2.`pid` = ch1.`changeid` AND s4.`pid` = ch2.`changeid` 
 AND s6.`pid` = :to AND s2.`distance` > s1.`distance` AND s4.`distance` > s3.`distance` 
-AND s6.`distance` > s5.`distance` AND s1.`bid` <> s3.`bid` AND s3.`bid` <> s5.`bid`
-AND s1.`bid` <> s5.`bid` ORDER BY (dist1 + dist2 + dist3) LIMIT 5;
+AND s6.`distance` > s5.`distance` AND b1.`busid` = s1.`bid` AND b2.`busid` = s3.`bid` AND 
+b3.`busid` = s5.`bid` AND b1.similarity <> b2.similarity
+AND b2.similarity <> b3.similarity AND b1.similarity <> b3.similarity
+ORDER BY (dist1 + dist2 + dist3) LIMIT 5;
 SQL;
 
 		$res = $this->dbh->query($sql, array(':from' => $from, ':to' => $to));
@@ -233,7 +227,7 @@ SQL;
 	
 	public function getbusdetails($busid) {
 	
-		$res	= $this->dbh->query("SELECT `routeno`, `from`, `to` FROM bus "
+		$res	= $this->dbh->query("SELECT `routeno`, `from`, `to` FROM bus_bus "
 						."WHERE busid = :id", array(':id' => $busid));
 		$return = false;
 
@@ -249,7 +243,7 @@ SQL;
 	
 	public function getplacename($pid) {
 	
-		$res	= $this->dbh->query("SELECT name FROM place WHERE pid = :id", 
+		$res	= $this->dbh->query("SELECT name FROM bus_place WHERE pid = :id", 
 						array(':id' => $pid));
 		$return = false;
 

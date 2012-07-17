@@ -60,6 +60,32 @@ if(isset($_GET['from']) && isset($_GET['to'])) {
 		ob_end_flush();
 	}
 }
+else if(isset($_GET['id'])) {
+
+	if(isset($_GET['client'])) {
+	
+		$scr = '<script type="text/javascript">populatebyid("'.$_GET['id'].'");</script></head>';
+	
+		$fh = fopen("./client.html", 'r');
+		while (($data = fgets($fh, 2048)) !== false) {
+		
+			echo str_replace('</head>', $scr, $data);
+		}
+	
+	}
+	else {
+	
+		$id = explode('_', $_GET['id']);
+	
+		$cachefile	= "./cache/" . (int)$id[0] . "_" . (int)$id[1] . ".html";
+
+		if(file_exists($cachefile)) {
+	
+			header('Content-type: application/json');
+			include($cachefile);
+		}
+	}
+}
 else {
 
 	include('./client.html');

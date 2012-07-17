@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 14, 2012 at 07:31 PM
+-- Generation Time: Jul 17, 2012 at 05:36 PM
 -- Server version: 5.5.8
 -- PHP Version: 5.3.5
 
@@ -16,113 +16,114 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `bus`
+-- Database: `newbus`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bus`
+-- Table structure for table `bus_bus`
 --
 
-CREATE TABLE IF NOT EXISTS `bus` (
+CREATE TABLE IF NOT EXISTS `bus_bus` (
   `busid` int(11) NOT NULL AUTO_INCREMENT,
   `routeno` varchar(5) NOT NULL,
+  `similarity` int(11) NOT NULL,
   `from` varchar(20) NOT NULL,
   `to` varchar(20) NOT NULL,
   PRIMARY KEY (`busid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=135 ;
 
 --
--- Dumping data for table `bus`
+-- Dumping data for table `bus_bus`
 --
 
-INSERT INTO `bus` (`busid`, `routeno`, `from`, `to`) VALUES
-(1, '138', 'Pettah', 'Kottawa'),
-(2, '138', 'Pettah', 'Homagama'),
-(3, '138', 'Pettah', 'Maharagama'),
-(4, '138/2', 'Pettah', 'Mattegoda'),
-(5, '138/4', 'Pettah', 'Athurugiriya'),
-(6, '138/3', 'Pettah', 'Rukmalgama'),
-(7, '100', 'Pettah', 'Panadura'),
-(8, '100', 'Pettah', 'Moratuwa'),
-(9, '101', 'Pettah', 'Moratuwa'),
-(10, '154', 'Kiribathgoda', 'Angulana'),
-(11, '154', 'Kadawatha', 'Bambalapitiya'),
-(12, '120', 'Pettah', 'Horana'),
-(13, '120', 'Pettah', 'Kesbewa'),
-(14, '120', 'Pettah', 'Piliyandala'),
-(15, '141', 'Narahenpita', 'Wellawatte'),
-(16, '135', 'Kohuwala', 'Kelaniya'),
-(17, '122', 'Pettah', 'Avissawella'),
-(18, '122', 'Pettah', 'Rathnapura'),
-(19, '125', 'Pettah', 'Padukka'),
-(20, '125', 'Pettah', 'Ingiriya'),
-(21, '177', 'Kollupitiya', 'Kaduwela'),
-(22, '155', 'Soysapura', 'Mattakkuliya'),
-(23, '155', 'Mount Lavinia', 'Mattakkuliya'),
-(24, '140', 'Kollupitiya', 'Wellampitiya'),
-(25, '175', 'Kollupitiya', 'Kohilawatte'),
-(26, '119', 'Dehiwala', 'Maharagama'),
-(27, '174', 'Kottawa', 'Borella'),
-(28, '163', 'Dehiwala', 'Battaramulla'),
-(29, '176', 'Karagampitiya', 'Hettiyawatte'),
-(30, '103', 'Narahenpita', 'Fort'),
-(31, '187', 'Fort', 'Airport'),
-(32, '190', 'Pettah', 'Meegoda'),
-(33, '336', 'Kottawa', 'Malabe'),
-(34, '17', 'Kandy', 'Panadura'),
-(101, '138', 'Kottawa', 'Pettah'),
-(102, '138', 'Homagama', 'Pettah'),
-(103, '138', 'Maharagama', 'Pettah'),
-(104, '138/2', 'Mattegoda', 'Pettah'),
-(105, '138/4', 'Athurugiriya', 'Pettah'),
-(106, '138/3', 'Rukmalgama', 'Pettah'),
-(107, '100', 'Panadura', 'Pettah'),
-(108, '100', 'Moratuwa', 'Pettah'),
-(109, '101', 'Moratuwa', 'Pettah'),
-(110, '154', 'Angulana', 'Kiribathgoda'),
-(111, '154', 'Bambalapitiya', 'Kadawatha'),
-(112, '120', 'Horana', 'Pettah'),
-(113, '120', 'Kesbewa', 'Pettah'),
-(114, '120', 'Piliyandala', 'Pettah'),
-(115, '141', 'Wellawatte', 'Narahenpita'),
-(116, '135', 'Kelaniya', 'Kohuwala'),
-(117, '122', 'Avissawella', 'Pettah'),
-(118, '122', 'Rathnapura', 'Pettah'),
-(119, '125', 'Padukka', 'Pettah'),
-(120, '125', 'Ingiriya', 'Pettah'),
-(121, '177', 'Kaduwela', 'Kollupitiya'),
-(122, '155', 'Mattakkuliya', 'Soysapura'),
-(123, '155', 'Mattakkuliya', 'Mount Lavinia'),
-(124, '140', 'Wellampitiya', 'Kollupitiya'),
-(125, '175', 'Kohilawatte', 'Kollupitiya'),
-(126, '119', 'Maharagama', 'Dehiwala'),
-(127, '174', 'Borella', 'Kottawa'),
-(128, '163', 'Battaramulla', 'Dehiwala'),
-(129, '176', 'Hettiyawatte', 'Karagampitiya'),
-(130, '103', 'Fort', 'Narahenpita'),
-(131, '187', 'Airport', 'Fort'),
-(132, '190', 'Meegoda', 'Pettah'),
-(133, '336', 'Malabe', 'Kottawa'),
-(134, '17', 'Panadura', 'Kandy');
+INSERT INTO `bus_bus` (`busid`, `routeno`, `similarity`, `from`, `to`) VALUES
+(1, '138', 1, 'Pettah', 'Kottawa'),
+(2, '138', 1, 'Pettah', 'Homagama'),
+(3, '138', 1, 'Pettah', 'Maharagama'),
+(4, '138/2', 1, 'Pettah', 'Mattegoda'),
+(5, '138/4', 1, 'Pettah', 'Athurugiriya'),
+(6, '138/3', 1, 'Pettah', 'Rukmalgama'),
+(7, '100', 2, 'Pettah', 'Panadura'),
+(8, '100', 2, 'Pettah', 'Moratuwa'),
+(9, '101', 3, 'Pettah', 'Moratuwa'),
+(10, '154', 4, 'Kiribathgoda', 'Angulana'),
+(11, '154', 4, 'Kadawatha', 'Bambalapitiya'),
+(12, '120', 5, 'Pettah', 'Horana'),
+(13, '120', 5, 'Pettah', 'Kesbewa'),
+(14, '120', 5, 'Pettah', 'Piliyandala'),
+(15, '141', 6, 'Narahenpita', 'Wellawatte'),
+(16, '135', 7, 'Kohuwala', 'Kelaniya'),
+(17, '122', 8, 'Pettah', 'Avissawella'),
+(18, '122', 8, 'Pettah', 'Rathnapura'),
+(19, '125', 8, 'Pettah', 'Padukka'),
+(20, '125', 8, 'Pettah', 'Ingiriya'),
+(21, '177', 9, 'Kollupitiya', 'Kaduwela'),
+(22, '155', 10, 'Soysapura', 'Mattakkuliya'),
+(23, '155', 10, 'Mount Lavinia', 'Mattakkuliya'),
+(24, '140', 11, 'Kollupitiya', 'Wellampitiya'),
+(25, '175', 12, 'Kollupitiya', 'Kohilawatte'),
+(26, '119', 13, 'Dehiwala', 'Maharagama'),
+(27, '174', 14, 'Kottawa', 'Borella'),
+(28, '163', 15, 'Dehiwala', 'Battaramulla'),
+(29, '176', 16, 'Karagampitiya', 'Hettiyawatte'),
+(30, '103', 17, 'Narahenpita', 'Fort'),
+(31, '187', 18, 'Fort', 'Airport'),
+(32, '190', 19, 'Pettah', 'Meegoda'),
+(33, '336', 20, 'Kottawa', 'Malabe'),
+(34, '17', 21, 'Kandy', 'Panadura'),
+(101, '138', 101, 'Kottawa', 'Pettah'),
+(102, '138', 101, 'Homagama', 'Pettah'),
+(103, '138', 101, 'Maharagama', 'Pettah'),
+(104, '138/2', 101, 'Mattegoda', 'Pettah'),
+(105, '138/4', 101, 'Athurugiriya', 'Pettah'),
+(106, '138/3', 101, 'Rukmalgama', 'Pettah'),
+(107, '100', 102, 'Panadura', 'Pettah'),
+(108, '100', 102, 'Moratuwa', 'Pettah'),
+(109, '101', 103, 'Moratuwa', 'Pettah'),
+(110, '154', 104, 'Angulana', 'Kiribathgoda'),
+(111, '154', 104, 'Bambalapitiya', 'Kadawatha'),
+(112, '120', 105, 'Horana', 'Pettah'),
+(113, '120', 105, 'Kesbewa', 'Pettah'),
+(114, '120', 105, 'Piliyandala', 'Pettah'),
+(115, '141', 106, 'Wellawatte', 'Narahenpita'),
+(116, '135', 107, 'Kelaniya', 'Kohuwala'),
+(117, '122', 108, 'Avissawella', 'Pettah'),
+(118, '122', 108, 'Rathnapura', 'Pettah'),
+(119, '125', 109, 'Padukka', 'Pettah'),
+(120, '125', 109, 'Ingiriya', 'Pettah'),
+(121, '177', 110, 'Kaduwela', 'Kollupitiya'),
+(122, '155', 111, 'Mattakkuliya', 'Soysapura'),
+(123, '155', 111, 'Mattakkuliya', 'Mount Lavinia'),
+(124, '140', 112, 'Wellampitiya', 'Kollupitiya'),
+(125, '175', 113, 'Kohilawatte', 'Kollupitiya'),
+(126, '119', 114, 'Maharagama', 'Dehiwala'),
+(127, '174', 115, 'Borella', 'Kottawa'),
+(128, '163', 116, 'Battaramulla', 'Dehiwala'),
+(129, '176', 117, 'Hettiyawatte', 'Karagampitiya'),
+(130, '103', 118, 'Fort', 'Narahenpita'),
+(131, '187', 119, 'Airport', 'Fort'),
+(132, '190', 120, 'Meegoda', 'Pettah'),
+(133, '336', 121, 'Malabe', 'Kottawa'),
+(134, '17', 122, 'Panadura', 'Kandy');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `changeover`
+-- Table structure for table `bus_changeover`
 --
 
-CREATE TABLE IF NOT EXISTS `changeover` (
+CREATE TABLE IF NOT EXISTS `bus_changeover` (
   `changeid` int(11) NOT NULL,
   PRIMARY KEY (`changeid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `changeover`
+-- Dumping data for table `bus_changeover`
 --
 
-INSERT INTO `changeover` (`changeid`) VALUES
+INSERT INTO `bus_changeover` (`changeid`) VALUES
 (2),
 (5),
 (7),
@@ -154,10 +155,10 @@ INSERT INTO `changeover` (`changeid`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `place`
+-- Table structure for table `bus_place`
 --
 
-CREATE TABLE IF NOT EXISTS `place` (
+CREATE TABLE IF NOT EXISTS `bus_place` (
   `pid` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(36) NOT NULL,
   `lat` float NOT NULL,
@@ -166,10 +167,10 @@ CREATE TABLE IF NOT EXISTS `place` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=304 ;
 
 --
--- Dumping data for table `place`
+-- Dumping data for table `bus_place`
 --
 
-INSERT INTO `place` (`pid`, `name`, `lat`, `lon`) VALUES
+INSERT INTO `bus_place` (`pid`, `name`, `lat`, `lon`) VALUES
 (1, 'Pettah', 6.93321, 79.8554),
 (2, 'Fort Railway Station', 6.93408, 79.8502),
 (3, 'Lotus Road', 6.93398, 79.847),
@@ -323,10 +324,10 @@ INSERT INTO `place` (`pid`, `name`, `lat`, `lon`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stop`
+-- Table structure for table `bus_stop`
 --
 
-CREATE TABLE IF NOT EXISTS `stop` (
+CREATE TABLE IF NOT EXISTS `bus_stop` (
   `bid` int(5) NOT NULL,
   `pid` int(5) NOT NULL,
   `distance` float NOT NULL,
@@ -335,10 +336,10 @@ CREATE TABLE IF NOT EXISTS `stop` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `stop`
+-- Dumping data for table `bus_stop`
 --
 
-INSERT INTO `stop` (`bid`, `pid`, `distance`) VALUES
+INSERT INTO `bus_stop` (`bid`, `pid`, `distance`) VALUES
 (1, 1, 0),
 (1, 2, 609),
 (1, 25, 2503),
@@ -961,14 +962,14 @@ INSERT INTO `stop` (`bid`, `pid`, `distance`) VALUES
 (29, 278, 0),
 (29, 280, 0),
 (29, 281, 0),
-(30, 1, 0),
-(30, 2, 0),
-(30, 76, 0),
-(30, 77, 0),
+(30, 1, 7565),
+(30, 2, 8174),
+(30, 76, 4611),
+(30, 77, 5459),
 (30, 90, 0),
-(30, 100, 0),
-(30, 101, 0),
-(30, 102, 0),
+(30, 100, 3079),
+(30, 101, 2693),
+(30, 102, 2285),
 (31, 2, 0),
 (31, 74, 0),
 (31, 75, 0),
@@ -1723,17 +1724,17 @@ INSERT INTO `stop` (`bid`, `pid`, `distance`) VALUES
 --
 
 --
--- Constraints for table `changeover`
+-- Constraints for table `bus_changeover`
 --
-ALTER TABLE `changeover`
-  ADD CONSTRAINT `changeover_ibfk_2` FOREIGN KEY (`changeid`) REFERENCES `place` (`pid`),
-  ADD CONSTRAINT `changeover_ibfk_1` FOREIGN KEY (`changeid`) REFERENCES `place` (`pid`);
+ALTER TABLE `bus_changeover`
+  ADD CONSTRAINT `bus_changeover_ibfk_1` FOREIGN KEY (`changeid`) REFERENCES `bus_place` (`pid`),
+  ADD CONSTRAINT `bus_changeover_ibfk_2` FOREIGN KEY (`changeid`) REFERENCES `bus_place` (`pid`);
 
 --
--- Constraints for table `stop`
+-- Constraints for table `bus_stop`
 --
-ALTER TABLE `stop`
-  ADD CONSTRAINT `stop_ibfk_1` FOREIGN KEY (`bid`) REFERENCES `bus` (`busid`),
-  ADD CONSTRAINT `stop_ibfk_2` FOREIGN KEY (`pid`) REFERENCES `place` (`pid`),
-  ADD CONSTRAINT `stop_ibfk_3` FOREIGN KEY (`bid`) REFERENCES `bus` (`busid`),
-  ADD CONSTRAINT `stop_ibfk_4` FOREIGN KEY (`pid`) REFERENCES `place` (`pid`);
+ALTER TABLE `bus_stop`
+  ADD CONSTRAINT `bus_stop_ibfk_1` FOREIGN KEY (`bid`) REFERENCES `bus_bus` (`busid`),
+  ADD CONSTRAINT `bus_stop_ibfk_2` FOREIGN KEY (`pid`) REFERENCES `bus_place` (`pid`),
+  ADD CONSTRAINT `bus_stop_ibfk_3` FOREIGN KEY (`bid`) REFERENCES `bus_bus` (`busid`),
+  ADD CONSTRAINT `bus_stop_ibfk_4` FOREIGN KEY (`pid`) REFERENCES `bus_place` (`pid`);
