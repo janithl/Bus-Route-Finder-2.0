@@ -28,6 +28,8 @@ SQL;
 	
 	public function getnodebyname($name) {
 	
+		$name = preg_replace('/[^\w]+/', '%', strtolower($name));
+	
 		$sql = <<<SQL
 SELECT pid, name FROM bus_place WHERE name LIKE :name LIMIT 1
 SQL;
@@ -181,7 +183,7 @@ ON s3.`bid` = s4.`bid`
 WHERE s1.`pid` = :from AND s2.`pid` = ch1.`changeid` AND s4.`pid` = :to 
 AND s2.`distance` > s1.`distance` AND s4.`distance` > s3.`distance` 
 AND b1.`busid` = s1.`bid` AND b2.`busid` = s3.`bid` AND
-b1.similarity <> b2.similarity AND s1.`bid` <> s3.`bid` 
+b1.similarity <> b2.similarity 
 ORDER BY (dist1 + dist2)  LIMIT 5;
 SQL;
 	

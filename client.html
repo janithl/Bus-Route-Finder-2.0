@@ -2,20 +2,24 @@
 <html>
 <head>
 <title>Colombo Bus Route Finder</title>
-<link rel="stylesheet" href="./inc/bus.css" type="text/css"/>
-<link rel="icon" href="./inc/favicon.ico" type="image/x-icon"/>
-<link rel="shortcut icon" href="./inc/favicon.ico" type="image/x-icon"/>
+<link rel="icon" href="./static/favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="./static/favicon.ico" type="image/x-icon"/>
+<link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700">
+<link rel="stylesheet" href="./static/bus.css" type="text/css"/>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-<script type="text/javascript" src="./inc/bus.js"></script>
+<script type="text/javascript" src="./static/tags.js"></script>
+<script type="text/javascript" src="./static/bus.js"></script>
 </head>
 <body>
 <div id="form">
-I want to take a bus...<br><br>
-<label class="label">from</label><input type="text" class="tbox" id="f" value="" /><br>
-<label class="label">to</label><input type="text" class="tbox" id="t" value="" /><br>
+<h3>I want to take a bus...</h3><br>
+<label class="label">from</label><input type="text" class="tbox" id="f" value="" autocomplete="off"/><br>
+<label class="label">to</label><input type="text" class="tbox" id="t" value="" autocomplete="off"/><br>
 <button type="submit" onclick="findbus()" class="button">find a bus</button>
 </div>
 <div id="list">
 </div>
+<div class="footer">Forever in Beta 2012 &middot; 
+<a href="https://github.com/janithl/Bus-Route-Finder-2.0" title="Source Code">Source Code</a></div>
 </body>
 </html>

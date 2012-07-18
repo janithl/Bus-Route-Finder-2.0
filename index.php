@@ -21,7 +21,7 @@ if(isset($_GET['from']) && isset($_GET['to'])) {
 	}
 	else {
 
-		$fnode	= $b->getnodebyname(urldecode($_GET['from']));
+		$fnode	= $b->getnodebyname(trim(urldecode($_GET['from'])));
 	}
 
 	if(preg_match('/[0-9.,]+/', urldecode($_GET['to']))) {
@@ -31,7 +31,7 @@ if(isset($_GET['from']) && isset($_GET['to'])) {
 	}
 	else {
 
-		$tnode	= $b->getnodebyname(urldecode($_GET['to']));
+		$tnode	= $b->getnodebyname(trim(urldecode($_GET['to'])));
 	}
 		
 	$cachefile	= "./cache/{$fnode['pid']}_{$tnode['pid']}.html";
@@ -83,6 +83,11 @@ else if(isset($_GET['id'])) {
 	
 			header('Content-type: application/json');
 			include($cachefile);
+		}
+		else {
+		
+			header('Content-type: application/json');
+			echo json_encode(array());
 		}
 	}
 }

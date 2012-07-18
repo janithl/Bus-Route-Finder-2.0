@@ -1,0 +1,161 @@
+body {
+	margin: 0;
+	padding: 0;
+	font: 15px 'Droid Sans', Arial, sans-serif;
+}
+
+#list {
+	width: 480px;
+	padding: 30px;
+	min-height: 240px;
+}
+
+#form {
+	background: #EEE;
+	padding: 30px;
+	font-size: 15px;
+	display: block;
+}
+
+#form h3 {
+	margin: 0;
+}
+
+.label {
+	width: 100px;
+	display: block;
+	float: left;
+	padding: 10px 0;
+	clear: both;
+}
+
+/*
+	CSS for button and textboxes taken from bootstrap:
+	http://twitter.github.com/bootstrap/
+*/
+
+.button {
+	padding: 10px;
+	border: 1px #EEE solid;
+	margin-left: 217px;
+	margin-top: 5px;
+    color: #FFF;
+    cursor: pointer;
+    background-color: #49AFCD;
+    background-image: -moz-linear-gradient(center top , #5BC0DE, #2F96B4);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.button:hover {
+	background: #2F96B4;
+}
+
+.tbox {
+	padding: 5px;
+	margin: 5px 0;
+	font-size: 15px;
+	border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+
+.tbox:focus {
+	border-color: rgba(82, 168, 236, 0.8);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+	outline: 0 none;
+}
+
+.title {
+	font-size: 16px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.sug {
+	padding: 5px;
+	font-size: 14px;
+	color: #333;
+}
+
+a {
+	color:#0ab9e5;
+	text-decoration:none;
+	outline: none;
+}
+
+a:hover	{
+	text-decoration: underline;
+}
+
+.instructions {
+	display: none;
+	padding: 10px;
+}
+
+.first {
+	display: block;
+}
+
+.step {
+	padding: 5px;
+	border-top: #EEE 1px dotted;
+	clear: both;
+}
+
+.firststep {
+	padding: 5px;
+	border-top: none;
+}
+
+.dist {
+	float: right;
+	color: #BBB;
+	font-size: 85%;
+}
+
+.footer {
+	text-align:center;
+	color: #AAA;
+}
+
+/* suggestions box */
+/* js code generates unordered list */
+
+.suggestion
+{
+	position:absolute;
+	width: 200px;
+	font-size: 15px;
+	background-color:#333;
+	color:#CCC;
+	margin:0 100px;
+	padding:0;
+	z-index: 100;
+	text-align: center;
+	
+}
+.suggestion ul
+{
+	position:absolute;
+	width:200px;
+	top:0;
+}
+.suggestion li
+{
+	font-size: 15px;
+	margin:0;
+	padding: 3px 10px;
+	list-style:none;
+	display:block;
+	width: 180px;
+	cursor: pointer;
+}
+
+.suggestion li:hover
+{
+	color:#FFF;
+	background-color: #555;
+}
